@@ -1,0 +1,31 @@
+<?php
+class Db 
+{
+	protected static $_instance = array();
+	protected $_link;
+	protected $_server_id;
+	
+	public static function getInstance($server_id) 
+	{
+		
+		if(!isset(self::$_instance[$server_id])) 
+		{
+			self::$_instance[$server_id] = new MsSQL($server_id);
+		}
+
+		return self::$_instance[$server_id];
+	}
+
+	function __construct($server_id) 
+	{
+		$this->_server_id = $server_id;
+		$this->connect();
+	}
+
+	public function __destruct()
+	{
+		$this->disconnect();
+	}	
+}
+
+?>
